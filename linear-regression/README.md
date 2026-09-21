@@ -1,60 +1,75 @@
-# Linear Regression Learning Lab
+# Insurance Expense Prediction Using BMI and Age
 
-A beginner-friendly project for learning linear regression from first principles using real insurance data.
+### MSBA 265 – Module 2: Linear Regression Assignment
 
-Students will learn two ways to train the same type of model:
+## Project Overview
+
+This project examines how BMI and age can be used to predict insurance expenses through linear regression. It extends a model that uses only BMI by including age as an additional feature to explore whether the second variable improves prediction performance.
+
+Two methods are used to train the two-feature model:
+
 - Normal Equation (analytical solution)
 - Gradient Descent (iterative optimization)
 
-The project includes Python scripts and a Jupyter notebook so you can learn either in code-first or notebook-first style.
+The project compares both methods with a BMI-only baseline and evaluates their performance using MSE, RMSE, MAE, and R².
 
-## What You Are Downloading
+## What This Repository Contains
 
-This repository contains:
-- Educational Python scripts that build from data exploration to model comparison
-- A Jupyter notebook version of the lesson with visual outputs and interpretations
-- A local copy of the insurance dataset used in all examples
-- A saved model-comparison chart
+This repository includes:
 
-## Learning Objectives
+- A Python script implementing linear regression with BMI and age
+- An insurance dataset containing 1,338 observations
+- A CSV file containing model weights and evaluation metrics
+- A written memo explaining the results and business implications
 
-By the end of this lab, students should be able to:
-1. Load and inspect a real dataset.
-2. Explain the difference between features and target.
-3. Train a single-feature linear regression model with the Normal Equation.
-4. Train the same model with Gradient Descent.
-5. Understand why feature standardization helps Gradient Descent.
-6. Evaluate model quality using MSE, RMSE, MAE, and R2.
-7. Compare train vs test performance and discuss generalization.
-8. Translate technical results into plain-language stakeholder takeaways.
+## Project Objectives
+
+The objectives of this assignment are to:
+
+1. Load and prepare insurance data for regression analysis.
+2. Build a linear regression model using BMI and age.
+3. Implement the Normal Equation using a general matrix solver.
+4. Train the same model using Gradient Descent with standardized features.
+5. Convert the Gradient Descent weights back to their original units.
+6. Evaluate model performance using MSE, RMSE, MAE, and R².
+7. Compare the two-feature models with a BMI-only baseline.
+8. Interpret the results and discuss whether the model is suitable for deployment.
 
 ## Repository Structure
 
-- 01_simple_linear.py
-- 02_ols_normal_equation.py
-- 03_gradient_descent.py
-- 04_compare_models_visual.py
-- linear_regression_lab.ipynb
-- requirements.txt
-- data/insurance-premium-prediction/insurance.csv
-- data/model_comparison_bmi_expenses.png
+```text
+MSBA265_Module2_NguyenMy/
+│
+├── README.md
+├── assignment_two_feature_nguyenmy.py
+├── assignment_memo.md
+│
+├── data/
+│   └── insurance-premium-prediction/
+│       └── insurance.csv
+│
+└── reports/
+    └── assignment_results.csv
+```
 
 ## Prerequisites
 
-- Python 3.10 or newer recommended
+Before running the project, make sure you have:
+
+- Python 3.10 or newer
 - Git
-- Internet access (only needed for initial clone and optional package installs)
+- Internet access for cloning the repository and installing dependencies
 
-## 1) Clone the Project
+## 1. Clone the Repository
 
-Run in a terminal:
+Open a terminal and run:
 
 ```bash
-git clone https://github.com/shylasolis/linear-regression-with-standardization.git
-cd linear-regression-with-standardization
+git clone https://github.com/nguyenmysan/MSBA265_Module2_NguyenMy.git
+cd MSBA265_Module2_NguyenMy
 ```
 
-## 2) Create and Activate a Virtual Environment
+## 2. Create and Activate a Virtual Environment
 
 ### Windows (PowerShell)
 
@@ -63,7 +78,7 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-If script execution is blocked:
+If script execution is blocked, run:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
@@ -77,94 +92,130 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-## 3) Install Dependencies
+## 3. Install Dependencies
+
+This project requires NumPy for numerical calculations and matrix operations.
 
 ### Windows
 
 ```powershell
 python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+python -m pip install numpy
 ```
 
 ### macOS
 
 ```bash
 python3 -m pip install --upgrade pip
-python3 -m pip install -r requirements.txt
+python3 -m pip install numpy
 ```
 
-## 4) Run the Scripts in Order
+## 4. Run the Python Script
+
+Make sure you are in the repository's root directory.
 
 ### Windows
 
 ```powershell
-python 01_simple_linear.py
-python 02_ols_normal_equation.py
-python 03_gradient_descent.py
-python 04_compare_models_visual.py
+python assignment_two_feature_nguyenmy.py
 ```
 
 ### macOS
 
 ```bash
-python3 01_simple_linear.py
-python3 02_ols_normal_equation.py
-python3 03_gradient_descent.py
-python3 04_compare_models_visual.py
+python3 assignment_two_feature_nguyenmy.py
 ```
 
-Why this order:
-1. Explore and understand the data
-2. Learn analytical OLS
-3. Learn iterative OLS with Gradient Descent
-4. Compare both methods and review business interpretation
+The script performs the following steps:
 
-## 5) Run the Jupyter Notebook
+1. Loads BMI, age, and expenses from the insurance dataset.
+2. Fits a two-feature linear regression model using the Normal Equation.
+3. Standardizes BMI and age before training with Gradient Descent.
+4. Converts the Gradient Descent weights back to their original units.
+5. Calculates MSE, RMSE, MAE, and R² for both methods.
+6. Fits a BMI-only baseline model for comparison.
+7. Prints a comparison table and exports the results to `reports/assignment_results.csv`.
 
-Start Jupyter:
+## 5. Model Results
 
-### Windows
+### Model Comparison
 
-```powershell
-python -m notebook
-```
+| Model | R² | RMSE |
+|---|---:|---:|
+| BMI-only Baseline | 0.0394 | 11,864.41 |
+| Normal Equation (BMI + Age) | 0.1173 | 11,373.64 |
+| Gradient Descent (BMI + Age) | 0.1173 | 11,373.64 |
 
-### macOS
+Adding age improved R² by approximately 0.0778, or 7.78 percentage points.
 
-```bash
-python3 -m notebook
-```
+Both the Normal Equation and Gradient Descent produced nearly identical model weights.
 
-Then open:
-- linear_regression_lab.ipynb
+### Two-Feature Model Weights
 
-Run cells from top to bottom.
+| Parameter | Value |
+|---|---:|
+| Intercept (w0) | -6437.35 |
+| BMI coefficient (w1) | 333.39 |
+| Age coefficient (w2) | 241.90 |
 
-## Key Concepts Students Should Notice
+The positive age coefficient indicates that predicted insurance expenses increase by approximately $241.90 for each additional year of age when BMI remains constant.
 
-- The Normal Equation and Gradient Descent should converge to very similar model parameters for this problem.
-- Standardizing BMI improves optimization stability for Gradient Descent.
-- A single-feature model has limited predictive power, which is expected and educational.
-- Metrics are only useful when interpreted in context of business goals and baseline performance.
+Although adding age improves the model's performance, the two-feature model explains only about 11.73% of the variation in insurance expenses.
+
+## 6. Review the Exported Results
+
+After running the Python script, open:
+
+`reports/assignment_results.csv`
+
+The CSV file contains the model weights and evaluation metrics for all three models.
+
+## 7. Written Memo
+
+The file `assignment_memo.md` provides a short discussion of the model results.
+
+The memo addresses four questions:
+
+1. How much did adding age improve R²?
+2. Why do the Normal Equation and Gradient Descent produce similar weights?
+3. What does the age coefficient mean for a non-technical stakeholder?
+4. Is the two-feature model suitable for deployment?
 
 ## Troubleshooting
 
-- ModuleNotFoundError:
-  - Make sure your virtual environment is activated.
-  - Re-run package installation from requirements.txt.
-- Wrong Python interpreter in VS Code:
-  - Use Command Palette -> Python: Select Interpreter -> choose .venv.
-- Notebook import issues:
-  - Ensure the notebook kernel is set to the same .venv environment.
+### ModuleNotFoundError: No module named 'numpy'
 
-## Suggested Class Activity
+Make sure the virtual environment is activated and install NumPy:
 
-1. Try several learning rates and compare convergence curves.
-2. Add more features and discuss changes in R2 and RMSE.
-3. Create a validation split and tune hyperparameters.
-4. Present results to a non-technical audience in plain language.
+```bash
+python -m pip install numpy
+```
 
-## License and Data
+### FileNotFoundError: insurance.csv
 
-- Educational use repository.
-- Dataset source: Kaggle insurance premium prediction dataset.
+Make sure the dataset is located at:
+
+`data/insurance-premium-prediction/insurance.csv`
+
+The dataset must remain in this location for the Python script to run correctly.
+
+### Wrong Python Interpreter in VS Code
+
+Open the Command Palette and select:
+
+`Python: Select Interpreter`
+
+Choose the Python interpreter from the `.venv` environment.
+
+## Dataset and Acknowledgment
+
+- Dataset source: Kaggle Insurance Premium Prediction Dataset.
+- This assignment builds on the Module 2 Linear Regression Learning Lab materials provided by Professor Shyla Solis.
+
+## Author
+
+Nguyen My San
+
+Master of Science in Business Analytics
+
+University of the Pacific
